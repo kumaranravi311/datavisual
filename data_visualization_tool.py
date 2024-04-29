@@ -109,6 +109,13 @@ if uploaded_file is not None:
         st.info("This displays the number of unique values in each column of the dataset.")
         st.subheader("Check for Duplicate Values")
         st.write(df.nunique())
+        # Data Filtering
+    if st.sidebar.checkbox("Data filtering"):
+        filter_column = st.sidebar.selectbox('Select Filter Column', df.columns)
+        filter_value = st.sidebar.text_input('Enter Filter Value')
+        if st.sidebar.button('Apply Filter'):
+            df = df[df[filter_column] == filter_value]
+
 
     st.sidebar.subheader("Data Visualization")
     plot_types = ['Bar Chart', 'Line Chart', 'Scatter Plot', 'Histogram', 'Box Plot', 'Pie Chart', 'Area Chart']
