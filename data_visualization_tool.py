@@ -117,6 +117,23 @@ if uploaded_file is not None:
             filtered_df = df[df[filter_column] == filter_value]
             st.subheader("Filtered Data")
             st.write(filtered_df)
+    if st.sidebar.checkbox("Data Transformation"):
+    transform_column = st.sidebar.selectbox('Select Column for Transformation', df.columns)
+    transform_operation = st.sidebar.selectbox('Select Transformation Operation', ['Add', 'Multiply', 'Custom'])
+    if transform_operation == 'Add':
+        add_value = st.sidebar.number_input('Enter Value to Add')
+        if st.sidebar.button('Apply Transformation'):
+            df[transform_column] += add_value
+    elif transform_operation == 'Multiply':
+        multiply_value = st.sidebar.number_input('Enter Value to Multiply')
+        if st.sidebar.button('Apply Transformation'):
+            df[transform_column] *= multiply_value
+    elif transform_operation == 'Custom':
+        custom_function = st.sidebar.text_input('Enter Custom Transformation Function')
+        if st.sidebar.button('Apply Transformation'):
+            df[transform_column] = df[transform_column].apply(eval(custom_function))
+
+
 
     st.sidebar.subheader("Data Visualization")
     plot_types = ['Bar Chart', 'Line Chart', 'Scatter Plot', 'Histogram', 'Box Plot', 'Pie Chart', 'Area Chart']
