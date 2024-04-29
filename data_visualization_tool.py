@@ -111,12 +111,12 @@ if uploaded_file is not None:
         st.write(df.nunique())
         # Data Filtering
     if st.sidebar.checkbox("Data Filtering"):
-    filter_column = st.sidebar.selectbox('Select Filter Column', df.columns)
-    filter_value = st.sidebar.text_input('Enter Filter Value')
-    if st.sidebar.button('Apply Filter'):
-        filtered_df = df[df[filter_column] == filter_value]
-        st.subheader("Filtered Data")
-        st.write(filtered_df)
+        filter_column = st.sidebar.selectbox('Select Filter Column', df.columns)
+        filter_value = st.sidebar.text_input('Enter Filter Value')
+        if st.sidebar.button('Apply Filter'):
+            filtered_df = df[df[filter_column] == filter_value]
+            st.subheader("Filtered Data")
+            st.write(filtered_df)
 
     st.sidebar.subheader("Data Visualization")
     plot_types = ['Bar Chart', 'Line Chart', 'Scatter Plot', 'Histogram', 'Box Plot', 'Pie Chart', 'Area Chart']
