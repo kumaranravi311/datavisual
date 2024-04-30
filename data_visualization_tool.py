@@ -57,15 +57,16 @@ highlighted_title = "<div style='background-color: #007bff; color: white; paddin
                     "</div>"
 st.markdown(highlighted_title, unsafe_allow_html=True)
 #st.markdown("<div style='text-align: center; margin-bottom: 20px;'>Developed by Kumaran R</div>", unsafe_allow_html=True)
-uploaded_file = st.sidebar.file_uploader("Upload your CSV file", type=["csv"])
+uploaded_file = st.sidebar.file_uploader("Upload your CSV or Excel file", type=["csv", "xlsx"])
 if uploaded_file is not None:
     if uploaded_file.type == 'text/csv':
         df = pd.read_csv(uploaded_file)
-    elif uploaded_file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
+    elif uploaded_file.type in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel']:
         df = pd.read_excel(uploaded_file, engine='openpyxl')
     else:
         st.error("Unsupported file format. Please upload a CSV or Excel file.")
         st.stop()
+    df = preprocess_data(df)
     df = preprocess_data(df)
     st.sidebar.subheader("Data Exploration")
     if st.sidebar.checkbox("View Data Head"):
