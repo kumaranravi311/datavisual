@@ -3,7 +3,6 @@ import pandas as pd
 import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
-from wordcloud import WordCloud
 import pygwalk
 
 # Function to preprocess data
@@ -92,14 +91,6 @@ if uploaded_file is not None:
     if st.sidebar.checkbox("Pairplot"):
         fig = px.scatter_matrix(df)
         st.plotly_chart(fig, use_container_width=True)
-
-    if st.sidebar.checkbox("Word Cloud"):
-        text = ' '.join(df[df.columns[0]].dropna())
-        wordcloud = WordCloud(width=800, height=400).generate(text)
-        plt.figure(figsize=(10, 5))
-        plt.imshow(wordcloud, interpolation='bilinear')
-        plt.axis('off')
-        st.pyplot(plt)
 
     if st.sidebar.checkbox("Value Counts"):
         value_counts_column = st.selectbox('Select Column for Value Counts', df.columns)
