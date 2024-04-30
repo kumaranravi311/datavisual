@@ -59,7 +59,13 @@ st.markdown(highlighted_title, unsafe_allow_html=True)
 #st.markdown("<div style='text-align: center; margin-bottom: 20px;'>Developed by Kumaran R</div>", unsafe_allow_html=True)
 uploaded_file = st.sidebar.file_uploader("Upload your CSV file", type=["csv"])
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+    if uploaded_file.name.endswith('csv'):
+        df = pd.read_csv(uploaded_file)
+    elif uploaded_file.name.endswith('xlsx'):
+        df = pd.read_excel(uploaded_file, engine='openpyxl')
+    else:
+        st.error("Unsupported file format. Please upload a CSV or Excel file.")
+        st.stop()
     df = preprocess_data(df)
     st.sidebar.subheader("Data Exploration")
     if st.sidebar.checkbox("View Data Head"):
