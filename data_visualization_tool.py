@@ -59,9 +59,9 @@ st.markdown(highlighted_title, unsafe_allow_html=True)
 #st.markdown("<div style='text-align: center; margin-bottom: 20px;'>Developed by Kumaran R</div>", unsafe_allow_html=True)
 uploaded_file = st.sidebar.file_uploader("Upload your CSV file", type=["csv"])
 if uploaded_file is not None:
-    if uploaded_file.name.endswith('csv'):
+    if uploaded_file.type == 'text/csv':
         df = pd.read_csv(uploaded_file)
-    elif uploaded_file.name.endswith('xlsx'):
+    elif uploaded_file.type == 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet':
         df = pd.read_excel(uploaded_file, engine='openpyxl')
     else:
         st.error("Unsupported file format. Please upload a CSV or Excel file.")
