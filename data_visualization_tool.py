@@ -62,11 +62,12 @@ if uploaded_file is not None:
     if uploaded_file.type == 'text/csv':
         df = pd.read_csv(uploaded_file)
     elif uploaded_file.type in ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.ms-excel']:
-        df = pd.read_excel(uploaded_file, engine='openpyxl')
+        xls = pd.ExcelFile(uploaded_file)
+        sheet_name = st.sidebar.selectbox("Select sheet for analysis", xls.sheet_names)
+        df = pd.read_excel(xls, sheet_name, engine='openpyxl')
     else:
         st.error("Unsupported file format. Please upload a CSV or Excel file.")
         st.stop()
-    df = preprocess_data(df)
     df = preprocess_data(df)
     st.sidebar.subheader("Data Exploration")
     if st.sidebar.checkbox("View Data Head"):
